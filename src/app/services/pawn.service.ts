@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CardionalDirections } from '../models/chessEnums';
 import { Pawn } from '../models/pawn';
 
 @Injectable({
@@ -27,5 +28,21 @@ export class PawnService {
       };
       resolve(newPawn);
     });
+  }
+
+  // this function returns the text of the pawn facing direction
+  getPawnFacingInText(direction: number): String {
+    if (direction == CardionalDirections.WEST) {
+      return 'WEST';
+    }
+    if (direction == CardionalDirections.SOUTH) {
+      return 'SOUTH';
+    }
+    if (direction == CardionalDirections.EAST) {
+      return 'EAST';
+    }
+    if (direction == CardionalDirections.NORTH) {
+      return 'NORTH';
+    }
   }
 }
