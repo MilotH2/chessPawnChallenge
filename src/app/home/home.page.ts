@@ -111,4 +111,10 @@ export class HomePage implements OnInit {
       return false;
     }
   }
+
+  // Default Image
+  errorHandler(event, rowIndex, colIndex) {
+    console.log(rowIndex, colIndex);
+    event.target.src = 'assets/pawns/default.png';
+  }
 }

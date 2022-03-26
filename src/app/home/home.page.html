@@ -20,12 +20,21 @@
           'selectNewBoxColorForCreatingNewPawn': selectNewBoxColorForCreatingNewPawn(chessBoardColumn, indexRow, indexColumn)
         }"
       >
+        <!-- h1 if there is an empty box selected to add a new PAWN -->
         <h1
           *ngIf="selectNewBoxColorForCreatingNewPawn(chessBoardColumn, indexRow, indexColumn)"
         >
           ?
         </h1>
-        <img src="" alt="" />
+        <!-- show image if chessBoardColumn is not empty -->
+        <img
+          *ngIf="chessBoardColumn != null"
+          src="
+            {{ chessBoardColumn.image }}
+          "
+          alt="no-img"
+          (error)="errorHandler($event, indexRow, indexColumn)"
+        />
       </ion-col>
     </ion-row>
   </ion-card>
