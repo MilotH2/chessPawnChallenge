@@ -7,14 +7,14 @@ import { Pawn } from '../models/pawn';
 export class PawnService {
   constructor() {}
 
-  // generates a new Pawn Model and returns it, i created this a promise because the create new pawn function must wait to create this before adding to the board
+  // generates a new Pawn Model and returns it, the function that calls generatePawn must await before going to next step
   generatePawn(
     rowIndex: number,
     colIndex: number,
     color: string,
     facing: number
   ): Promise<Pawn> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       let newPawn: Pawn = {
         rowIndex,
         colIndex,
