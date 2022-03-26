@@ -221,6 +221,7 @@ export class HomePage implements OnInit {
       this.southCalculation(chessBoardColumn, rowIndex, colIndex);
     }
     if (chessBoardColumn.facing == CardionalDirections.EAST) {
+      this.eastCalculation(chessBoardColumn, rowIndex, colIndex);
     }
     if (chessBoardColumn.facing == CardionalDirections.NORTH) {
     }
@@ -308,8 +309,35 @@ export class HomePage implements OnInit {
     }
   }
 
-  // east calc
-  eastCalculation(chessBoardColumn: Pawn, rowIndex, colIndex) {}
+  // this calculates PAWN Facing EAST squares where the PAWN is available to move.
+  eastCalculation(chessBoardColumn: Pawn, rowIndex, colIndex) {
+    // check if first move isn't made
+    if (chessBoardColumn.firstMove) {
+      // check if first and second squares are available
+      if (!this.chessBoard[rowIndex + 1][colIndex]) {
+        this.availableStepsOfSelectedPawn.push({
+          rowIndex: rowIndex + 1,
+          colIndex,
+        });
+      }
+      if (
+        !this.chessBoard[rowIndex + 1][colIndex] &&
+        !this.chessBoard[rowIndex + 2][colIndex]
+      ) {
+        this.availableStepsOfSelectedPawn.push({
+          rowIndex: rowIndex + 2,
+          colIndex,
+        });
+      }
+    } else {
+      if (rowIndex + 1 < 8 && !this.chessBoard[rowIndex + 1][colIndex]) {
+        this.availableStepsOfSelectedPawn.push({
+          rowIndex: rowIndex + 1,
+          colIndex,
+        });
+      }
+    }
+  }
 
   // north calc
   northCalculation(chessBoardColumn: Pawn, rowIndex, colIndex) {}
