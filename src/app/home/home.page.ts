@@ -79,7 +79,20 @@ export class HomePage implements OnInit {
       this.selectedDirection
     );
     console.log(newPawn);
+    // clear the selected square data
+    this.clearSelectedPawnAndIndexes();
 
+    // fill the indexes on the chessboard with the newly generated pawn
+    this.chessBoard[newPawn.rowIndex][newPawn.colIndex] = newPawn;
+
+    // select the newly created pawn
+    this.selectedPawn = this.chessBoard[newPawn.rowIndex][newPawn.colIndex];
+
+    // select square
+    this.rowIndex = newPawn.rowIndex;
+    this.colIndex = newPawn.colIndex;
+
+    // check condition of the available steps
     // this.checkConditionOfThePawnAndFillAvailablePawnSteps(
     //   this.selectedPawn,
     //   rowIndex,
