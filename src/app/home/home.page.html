@@ -1,7 +1,23 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-title> Chess Pawn Challenge </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content>
+  <!-- Generate ChessBoard Card, Rows and Columns which will give a Box for each column -->
+  <ion-card class="chessBoardCard" *ngIf="showChessBoard">
+    <!-- initializing rows -->
+    <ion-row *ngFor="let chessBoardRow of chessBoard; index as indexRow">
+      <!-- initializing columns for each row -->
+      <ion-col
+        *ngFor="let chessBoardColumn of chessBoardRow; index as indexColumn"
+        [ngClass]="
+        {
+          'colouredBox': addBoxColor(indexRow, indexColumn)
+        }"
+      >
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-content>

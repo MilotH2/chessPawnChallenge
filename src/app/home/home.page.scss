@@ -1,0 +1,13 @@
+ion-card.chessBoardCard {
+  margin: 3px 5px;
+  ion-row {
+    ion-col {
+      min-height: 50px;
+      max-height: 50px;
+    }
+    // box column different than white
+    ion-col.colouredBox {
+      background-color: lightslategray;
+    }
+  }
+}
