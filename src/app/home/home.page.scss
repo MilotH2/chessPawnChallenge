@@ -15,5 +15,14 @@ ion-card.chessBoardCard {
     ion-col.colouredBox {
       background-color: lightslategray;
     }
+    ion-col.highlightedBox {
+      background-color: lightgreen;
+    }
+    ion-col.freeBox {
+      background-color: green;
+    }
+    ion-col.selectNewBoxColorForCreatingNewPawn{
+      background-color: lightgreen;
+    }
   }
 }

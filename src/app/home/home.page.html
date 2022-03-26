@@ -19,6 +19,11 @@
           'freeBox': showFreeBoxAndCheckAvailablePawnStepsList(indexRow, indexColumn),
           'selectNewBoxColorForCreatingNewPawn': selectNewBoxColorForCreatingNewPawn(chessBoardColumn, indexRow, indexColumn)
         }"
+        (click)="
+          restrictMovement(chessBoardColumn, indexRow, indexColumn) ?
+          $event.stopPropagation() :
+          selectPawnOrMoveToOtherBox(chessBoardColumn, indexRow, indexColumn)
+        "
       >
         <!-- h1 if there is an empty box selected to add a new PAWN -->
         <h1
