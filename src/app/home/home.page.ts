@@ -345,7 +345,9 @@ export class HomePage implements OnInit {
 
   // this calculates PAWN Facing NORTH squares where the PAWN is available to move.
   northCalculation(chessBoardColumn: Pawn, rowIndex, colIndex) {
+    // check if first move isn't made
     if (chessBoardColumn.firstMove) {
+      // check if first and second squares are available
       if (!this.chessBoard[rowIndex][colIndex + 1]) {
         this.availableStepsOfSelectedPawn.push({
           rowIndex,
@@ -362,6 +364,7 @@ export class HomePage implements OnInit {
         });
       }
     } else {
+      // calculate first square
       if (colIndex + 1 < 8 && !this.chessBoard[rowIndex][colIndex + 1]) {
         this.availableStepsOfSelectedPawn.push({
           rowIndex,
