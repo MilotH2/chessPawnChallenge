@@ -173,6 +173,9 @@ export class HomePage implements OnInit {
         this.selectedPawn.rowIndex = rowIndex;
         this.selectedPawn.colIndex = colIndex;
 
+        // set first move false
+        this.selectedPawn.firstMove = false;
+
         // empty current occupied box with selected PAWN
         this.chessBoard[this.rowIndex][this.colIndex] = null;
 
@@ -224,6 +227,7 @@ export class HomePage implements OnInit {
       this.eastCalculation(chessBoardColumn, rowIndex, colIndex);
     }
     if (chessBoardColumn.facing == CardionalDirections.NORTH) {
+      this.northCalculation(chessBoardColumn, rowIndex, colIndex);
     }
   }
 
@@ -339,8 +343,33 @@ export class HomePage implements OnInit {
     }
   }
 
-  // north calc
-  northCalculation(chessBoardColumn: Pawn, rowIndex, colIndex) {}
+  // this calculates PAWN Facing NORTH squares where the PAWN is available to move.
+  northCalculation(chessBoardColumn: Pawn, rowIndex, colIndex) {
+    if (chessBoardColumn.firstMove) {
+      if (!this.chessBoard[rowIndex][colIndex + 1]) {
+        this.availableStepsOfSelectedPawn.push({
+          rowIndex,
+          colIndex: colIndex + 1,
+        });
+      }
+      if (
+        !this.chessBoard[rowIndex][colIndex + 1] &&
+        !this.chessBoard[rowIndex][colIndex + 2]
+      ) {
+        this.availableStepsOfSelectedPawn.push({
+          rowIndex,
+          colIndex: colIndex + 2,
+        });
+      }
+    } else {
+      if (colIndex + 1 < 8 && !this.chessBoard[rowIndex][colIndex + 1]) {
+        this.availableStepsOfSelectedPawn.push({
+          rowIndex,
+          colIndex: colIndex + 1,
+        });
+      }
+    }
+  }
 
   // this function moves PAWN facing direction to LEFT and RIGHT
   movePawnDirection(newDirection: number) {
