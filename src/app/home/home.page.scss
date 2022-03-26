@@ -56,3 +56,34 @@ ion-card.pawnRepordCard {
     }
   }
 }
+
+ion-grid.arrow-buttons {
+  display: flex;
+  justify-content: space-between;
+  ion-button {
+        --padding-start: 5px;
+    --padding-end: 5px;
+  }
+}
+
+
+ion-card.newPawnCard{
+  margin: 5px;
+  ion-item{
+    ion-label{
+      font-size: 14px;
+      font-weight: bold;
+    }
+    ion-buttons{
+      margin: 0px;
+    }
+  }
+}
+
+ion-segment {
+  ion-segment-button.segment-button-checked {
+    --indicator-color: var(--ion-color-primary) !important;
+    color: white;
+    ion-icon {color: white}
+  }
+}

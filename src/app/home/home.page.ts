@@ -29,7 +29,7 @@ export class HomePage implements OnInit {
   // when an empty box is selected, this turns true so this way we check the condition to show information for creating a new PAWN
   isCreatingNewPawn: boolean = false;
 
-  // creating a NEW PAWN MODEL for Facing Direction and Color
+  // creating a NEW PAWN MODEL for Facing Direction and Color/ default are 0 and WHITE
   selectedDirection: number = 0;
   selectedColor: string = 'WHITE';
 
@@ -60,6 +60,14 @@ export class HomePage implements OnInit {
     this.isCreatingNewPawn = false;
     this.availableStepsOfSelectedPawn = [];
     this.selectedPawn = null;
+  }
+
+  // new pawn setup for facing direction and color
+  directionSelectorChanged($event) {
+    this.selectedDirection = $event.detail.value;
+  }
+  colorSelectorChanged($event) {
+    this.selectedColor = $event.detail.value;
   }
 
   // this is the function that creates a new pawn on a currently selected empty box
@@ -202,6 +210,26 @@ export class HomePage implements OnInit {
     if (chessBoardColumn.facing == CardionalDirections.NORTH) {
     }
   }
+
+  // this function moves PAWN facing direction to LEFT and RIGHT
+  movePawnDirection(newDirection: number) {
+    console.log(this.selectedPawn);
+    // First we check which direction is currently facing
+    if (this.selectedPawn.facing == CardionalDirections.WEST) {
+      this.recalculateCurrentFacingWest(newDirection);
+    } else if (this.selectedPawn.facing == CardionalDirections.SOUTH) {
+      this.recalculateCurrentFacingSouth(newDirection);
+    } else if (this.selectedPawn.facing == CardionalDirections.EAST) {
+      this.recaulculateCurrentFacingEast(newDirection);
+    } else if (this.selectedPawn.facing == CardionalDirections.NORTH) {
+      this.recalculateCurrentFacingNorth(newDirection);
+    }
+  }
+
+  recalculateCurrentFacingWest(newDirection) {}
+  recalculateCurrentFacingSouth(newDirection) {}
+  recaulculateCurrentFacingEast(newDirection) {}
+  recalculateCurrentFacingNorth(newDirection) {}
 
   // Colors the Chess Board on condition, to show white and black color of the box
   addBoxColor(rowIndex, colIndex) {

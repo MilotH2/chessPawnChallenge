@@ -82,7 +82,82 @@
         </ion-card>
       </ion-col>
       <!-- TRUN PAWN and NEW PAWN -->
-      <ion-col size-xs="6"></ion-col>
+      <ion-col size-xs="6">
+        <!-- TURN BUTTONS -->
+        <ion-grid class="arrow-buttons">
+          <ion-button (click)="movePawnDirection(0)" [disabled]="!selectedPawn">
+            <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+          </ion-button>
+          <p>Turn</p>
+          <ion-button (click)="movePawnDirection(1)" [disabled]="!selectedPawn">
+            <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
+          </ion-button>
+        </ion-grid>
+        <ion-card class="newPawnCard" *ngIf="isCreatingNewPawn">
+          <ion-item lines="none">
+            <ion-label>New Pawn</ion-label>
+            <ion-buttons slot="end">
+              <ion-button
+                (click)="clearSelectedPawnAndIndexes()"
+                color="danger"
+              >
+                <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+          <ion-segment
+            value="{{ selectedColor }}"
+            (ionChange)="colorSelectorChanged($event)"
+          >
+            <ion-segment-button value="WHITE">
+              <ion-label>WHITE</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="BLACK">
+              <ion-label>BLACK</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+          <ion-item lines="none">
+            <ion-label>Facing</ion-label>
+            <ion-buttons slot="end">
+              <ion-button color="primary">
+                <ion-icon slot="icon-only" name="compass-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+          <ion-segment
+            value="{{ selectedDirection }}"
+            (ionChange)="directionSelectorChanged($event)"
+          >
+            <ion-segment-button value="0">
+              <ion-icon name="arrow-up-outline"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="2">
+              <ion-icon name="arrow-down-outline"></ion-icon>
+            </ion-segment-button>
+          </ion-segment>
+          <ion-segment
+            value="{{ selectedDirection }}"
+            (ionChange)="directionSelectorChanged($event)"
+          >
+            <ion-segment-button value="1">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="3">
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </ion-segment-button>
+          </ion-segment>
+          <br />
+          <ion-button (click)="createNewPawn()" expand="block" color="success"
+            >Create Pawn</ion-button
+          >
+        </ion-card>
+        <ion-card
+          class="new-pawn-text ion-padding ion-text-center"
+          *ngIf="!isCreatingNewPawn"
+        >
+          <h3>Select an empty square to add a new Pawn</h3>
+        </ion-card>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
