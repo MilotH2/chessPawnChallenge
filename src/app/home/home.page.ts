@@ -50,7 +50,18 @@ export class HomePage implements OnInit {
 
   // empties the board
   clearBoard(): void {
-    this.chessBoard = ChessBoard.emptyBoard;
+    this.chessBoard = [
+      // West // (0,0) is SouthWest or WestSout
+      [null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null],
+      /* South */ [null, null, null, null, null, null, null, null] /* North */,
+      [null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null],
+    ]; //East;
+    this.clearSelectedPawnAndIndexes();
   }
 
   // empty selections, clear all
@@ -88,6 +99,15 @@ export class HomePage implements OnInit {
     // select the newly created pawn
     this.selectedPawn = this.chessBoard[newPawn.rowIndex][newPawn.colIndex];
 
+    // add place log to the new selected pawn
+    this.addLogsToPawn(
+      `PLACE ${newPawn.rowIndex}, ${
+        newPawn.colIndex
+      }, ${this.getPawnFacingInText(newPawn.facing)}, ${newPawn.color}`,
+      newPawn.rowIndex,
+      newPawn.colIndex
+    );
+
     // select square
     this.rowIndex = newPawn.rowIndex;
     this.colIndex = newPawn.colIndex;
@@ -98,6 +118,39 @@ export class HomePage implements OnInit {
       newPawn.rowIndex,
       newPawn.colIndex
     );
+  }
+
+  // this function adds logs to the selected pawn and on the chessboard
+  addLogsToPawn(type: string, rowIndex, colIndex) {
+    // this line adds the logs to the chessboard
+    this.chessBoard[rowIndex][colIndex].logs.push(type);
+    // this line adss the logs to the selectedPawn
+    this.selectedPawn.logs = this.chessBoard[rowIndex][colIndex].logs;
+  }
+
+  // this function returns the text of the pawn facing direction
+  getPawnFacingInText(direction: number): String {
+    if (direction == CardionalDirections.WEST) {
+      return 'WEST';
+    }
+    if (direction == CardionalDirections.SOUTH) {
+      return 'SOUTH';
+    }
+    if (direction == CardionalDirections.EAST) {
+      return 'EAST';
+    }
+    if (direction == CardionalDirections.NORTH) {
+      return 'NORTH';
+    }
+  }
+
+  // Output text of the selected Pawn
+  get getOutputOfSelectedPawn(): String {
+    return `${this.selectedPawn.rowIndex}, ${
+      this.selectedPawn.colIndex
+    }, ${this.getPawnFacingInText(this.selectedPawn.facing)}, ${
+      this.selectedPawn.color
+    }`;
   }
 
   // if this function returns true, it means that the pawn can not move to other box, if false the pawn can move to other box square
@@ -153,6 +206,42 @@ export class HomePage implements OnInit {
     return false;
   }
 
+  // this adds log for move pawn, we have to check each direction if its firs move to be able to determine if its MOVE 2 or MOVE 1
+  addLogForMovePawn(rowIndex, colIndex) {
+    if (this.selectedPawn.firstMove) {
+      if (this.selectedPawn.facing == CardionalDirections.WEST) {
+        this.addLogsToPawn(
+          rowIndex == this.rowIndex - 2 ? 'MOVE 2' : 'MOVE 1',
+          this.rowIndex,
+          this.colIndex
+        );
+      }
+      if (this.selectedPawn.facing == CardionalDirections.SOUTH) {
+        this.addLogsToPawn(
+          colIndex == this.colIndex - 2 ? 'MOVE 2' : 'MOVE 1',
+          this.rowIndex,
+          this.colIndex
+        );
+      }
+      if (this.selectedPawn.facing == CardionalDirections.EAST) {
+        this.addLogsToPawn(
+          rowIndex == this.rowIndex + 2 ? 'MOVE 2' : 'MOVE 1',
+          this.rowIndex,
+          this.colIndex
+        );
+      }
+      if (this.selectedPawn.facing == CardionalDirections.NORTH) {
+        this.addLogsToPawn(
+          colIndex == this.colIndex + 2 ? 'MOVE 2' : 'MOVE 1',
+          this.rowIndex,
+          this.colIndex
+        );
+      }
+    } else {
+      this.addLogsToPawn('MOVE 1', this.rowIndex, this.colIndex);
+    }
+  }
+
   // on select of PAWN or EMPTY AVAILABLE BOX to move PAWN to other BOX
   selectPawnOrMoveToOtherBox(
     chessBoardColumn: Pawn | null,
@@ -169,6 +258,7 @@ export class HomePage implements OnInit {
         // select other pawn if exists
         this.selectPawnFillData(chessBoardColumn, rowIndex, colIndex);
       } else {
+        this.addLogForMovePawn(rowIndex, colIndex);
         // update selectedPawn indexes with upcoming index
         this.selectedPawn.rowIndex = rowIndex;
         this.selectedPawn.colIndex = colIndex;
@@ -389,6 +479,11 @@ export class HomePage implements OnInit {
     } else if (this.selectedPawn.facing == CardionalDirections.NORTH) {
       this.recalculateCurrentFacingNorth(newDirection);
     }
+    this.addLogsToPawn(
+      newDirection == DirectionMovement.LEFT ? 'LEFT' : 'RIGHT',
+      this.rowIndex,
+      this.colIndex
+    );
   }
 
   // recalculating the new facing of the selectedPawn

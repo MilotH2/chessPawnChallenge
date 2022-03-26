@@ -1,6 +1,11 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-title> Chess Pawn Challenge </ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="clearBoard()">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -63,7 +68,7 @@
             </div>
             <div *ngIf="selectedPawn && selectedPawn.logs.length > 0">
               <ion-item lines="full" class="outputItem">
-                <ion-label>Output: output</ion-label>
+                <ion-label>Output: {{ getOutputOfSelectedPawn }}</ion-label>
               </ion-item>
               <ion-list>
                 <ion-item
