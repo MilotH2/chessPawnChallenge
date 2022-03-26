@@ -93,11 +93,11 @@ export class HomePage implements OnInit {
     this.colIndex = newPawn.colIndex;
 
     // check condition of the available steps
-    // this.checkConditionOfThePawnAndFillAvailablePawnSteps(
-    //   this.selectedPawn,
-    //   rowIndex,
-    //   colIndex
-    // );
+    this.checkConditionOfThePawnAndFillAvailablePawnSteps(
+      this.selectedPawn,
+      newPawn.rowIndex,
+      newPawn.colIndex
+    );
   }
 
   // if this function returns true, it means that the pawn can not move to other box, if false the pawn can move to other box square
@@ -215,6 +215,7 @@ export class HomePage implements OnInit {
     colIndex
   ) {
     if (chessBoardColumn.facing == CardionalDirections.WEST) {
+      this.westCalculation(chessBoardColumn, rowIndex, colIndex);
     }
     if (chessBoardColumn.facing == CardionalDirections.SOUTH) {
     }
@@ -223,6 +224,51 @@ export class HomePage implements OnInit {
     if (chessBoardColumn.facing == CardionalDirections.NORTH) {
     }
   }
+
+  // this calculates PAWN Facing WEST squares where the PAWN is available to move.
+  westCalculation(chessBoardColumn: Pawn, rowIndex, colIndex) {
+    // check if first move isn't made
+    if (chessBoardColumn.firstMove) {
+      // check if first and second square are available
+      if (
+        !this.chessBoard[rowIndex - 1][colIndex] &&
+        !this.chessBoard[rowIndex - 2][colIndex]
+      ) {
+        this.availableStepsOfSelectedPawn.push({
+          rowIndex: rowIndex - 1,
+          colIndex,
+        });
+        this.availableStepsOfSelectedPawn.push({
+          rowIndex: rowIndex - 2,
+          colIndex,
+        });
+      }
+      // check if the first square is available
+      else if (!this.chessBoard[rowIndex - 1][colIndex]) {
+        this.availableStepsOfSelectedPawn.push({
+          rowIndex: rowIndex - 1,
+          colIndex,
+        });
+      }
+    } else {
+      // check if the first square is available
+      if (rowIndex - 1 >= 0 && !this.chessBoard[rowIndex - 1][colIndex]) {
+        this.availableStepsOfSelectedPawn.push({
+          rowIndex: rowIndex - 1,
+          colIndex,
+        });
+      }
+    }
+  }
+
+  // south calc
+  southCalculation(chessBoardColumn: Pawn, rowIndex, colIndex) {}
+
+  // east calc
+  eastCalculation(chessBoardColumn: Pawn, rowIndex, colIndex) {}
+
+  // north calc
+  northCalculation(chessBoardColumn: Pawn, rowIndex, colIndex) {}
 
   // this function moves PAWN facing direction to LEFT and RIGHT
   movePawnDirection(newDirection: number) {
