@@ -218,6 +218,7 @@ export class HomePage implements OnInit {
       this.westCalculation(chessBoardColumn, rowIndex, colIndex);
     }
     if (chessBoardColumn.facing == CardionalDirections.SOUTH) {
+      this.southCalculation(chessBoardColumn, rowIndex, colIndex);
     }
     if (chessBoardColumn.facing == CardionalDirections.EAST) {
     }
@@ -261,8 +262,51 @@ export class HomePage implements OnInit {
     }
   }
 
-  // south calc
-  southCalculation(chessBoardColumn: Pawn, rowIndex, colIndex) {}
+  // this calculates PAWN Facing SOUTH squares where the PAWN is available to move.
+  southCalculation(chessBoardColumn: Pawn, rowIndex, colIndex) {
+    // check if first move isn't made
+    if (chessBoardColumn.firstMove) {
+      // check if first and second squares are available
+      if (!this.chessBoard[rowIndex][colIndex - 1]) {
+        this.availableStepsOfSelectedPawn.push({
+          rowIndex,
+          colIndex: colIndex - 1,
+        });
+      }
+      if (
+        !this.chessBoard[rowIndex][colIndex - 1] &&
+        !this.chessBoard[rowIndex][colIndex - 2]
+      ) {
+        this.availableStepsOfSelectedPawn.push({
+          rowIndex,
+          colIndex: colIndex - 2,
+        });
+      }
+    } else {
+      // calculate first square
+      if (
+        colIndex !== 1 &&
+        colIndex < 8 &&
+        !this.chessBoard[rowIndex][colIndex - 1]
+      ) {
+        this.availableStepsOfSelectedPawn.push({
+          rowIndex,
+          colIndex: colIndex - 1,
+        });
+      }
+      // calculate the end of square
+      if (
+        colIndex == 1 &&
+        colIndex - 1 < 8 &&
+        !this.chessBoard[rowIndex][colIndex - 1]
+      ) {
+        this.availableStepsOfSelectedPawn.push({
+          rowIndex,
+          colIndex: colIndex - 1,
+        });
+      }
+    }
+  }
 
   // east calc
   eastCalculation(chessBoardColumn: Pawn, rowIndex, colIndex) {}
