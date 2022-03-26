@@ -174,6 +174,8 @@ export class HomePage implements OnInit {
         if (this.rowIndex != rowIndex || this.colIndex == colIndex) {
           this.clearSelectedPawnAndIndexes();
         }
+
+      // ToDo: Known bug: can not select an empty box facing on the opposite direction or the facing direction, for example if the pawn is facing on west, i can not select on an empty box behind of the pawn or after the green box of the pawn.
     }
 
     // clear data if there is no pawn selected and no pawn on the selected box
