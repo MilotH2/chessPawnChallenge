@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChessBoard } from '../models/chessBoard';
-import { CardionalDirections } from '../models/chessEnums';
+import { CardionalDirections, DirectionMovement } from '../models/chessEnums';
 import { Pawn } from '../models/pawn';
 import { PawnService } from '../services/pawn.service';
 
@@ -377,6 +377,8 @@ export class HomePage implements OnInit {
   // this function moves PAWN facing direction to LEFT and RIGHT
   movePawnDirection(newDirection: number) {
     console.log(this.selectedPawn);
+    // we remove the available steps of the selected pawn, it will be filled at the recalculation
+    this.availableStepsOfSelectedPawn = [];
     // First we check which direction is currently facing
     if (this.selectedPawn.facing == CardionalDirections.WEST) {
       this.recalculateCurrentFacingWest(newDirection);
@@ -389,10 +391,57 @@ export class HomePage implements OnInit {
     }
   }
 
-  recalculateCurrentFacingWest(newDirection) {}
-  recalculateCurrentFacingSouth(newDirection) {}
-  recaulculateCurrentFacingEast(newDirection) {}
-  recalculateCurrentFacingNorth(newDirection) {}
+  // recalculating the new facing of the selectedPawn
+  recalculateCurrentFacingWest(newDirection) {
+    // then we check which direction we want to turn it
+    if (newDirection == DirectionMovement.LEFT) {
+      // then we recalculate the new facing of the selectedPawn
+      this.selectedPawn.facing = CardionalDirections.SOUTH;
+      this.southCalculation(this.selectedPawn, this.rowIndex, this.colIndex);
+    } else if (newDirection == DirectionMovement.RIGHT) {
+      this.selectedPawn.facing = CardionalDirections.NORTH;
+      this.northCalculation(this.selectedPawn, this.rowIndex, this.colIndex);
+    }
+  }
+
+  // recalculating the new facing of the selectedPawn
+  recalculateCurrentFacingSouth(newDirection) {
+    // then we check which direction we want to turn it
+    if (newDirection == DirectionMovement.LEFT) {
+      // then we recalculate the new facing of the selectedPawn
+      this.selectedPawn.facing = CardionalDirections.EAST;
+      this.eastCalculation(this.selectedPawn, this.rowIndex, this.colIndex);
+    } else if (newDirection == DirectionMovement.RIGHT) {
+      this.selectedPawn.facing = CardionalDirections.WEST;
+      this.westCalculation(this.selectedPawn, this.rowIndex, this.colIndex);
+    }
+  }
+
+  // recalculating the new facing of the selectedPawn
+  recaulculateCurrentFacingEast(newDirection) {
+    // then we check which direction we want to turn it
+    if (newDirection == DirectionMovement.LEFT) {
+      // then we recalculate the new facing of the selectedPawn
+      this.selectedPawn.facing = CardionalDirections.NORTH;
+      this.northCalculation(this.selectedPawn, this.rowIndex, this.colIndex);
+    } else if (newDirection == DirectionMovement.RIGHT) {
+      this.selectedPawn.facing = CardionalDirections.SOUTH;
+      this.southCalculation(this.selectedPawn, this.rowIndex, this.colIndex);
+    }
+  }
+
+  // recalculating the new facing of the selectedPawn
+  recalculateCurrentFacingNorth(newDirection) {
+    // then we check which direction we want to turn it
+    if (newDirection == DirectionMovement.LEFT) {
+      // then we recalculate the new facing of the selectedPawn
+      this.selectedPawn.facing = CardionalDirections.WEST;
+      this.westCalculation(this.selectedPawn, this.rowIndex, this.colIndex);
+    } else if (newDirection == DirectionMovement.RIGHT) {
+      this.selectedPawn.facing = CardionalDirections.EAST;
+      this.eastCalculation(this.selectedPawn, this.rowIndex, this.colIndex);
+    }
+  }
 
   // Colors the Chess Board on condition, to show white and black color of the box
   addBoxColor(rowIndex, colIndex) {
