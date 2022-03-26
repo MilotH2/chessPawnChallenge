@@ -4,6 +4,12 @@ ion-card.chessBoardCard {
     ion-col {
       min-height: 50px;
       max-height: 50px;
+      h1 {
+        margin: 0; text-align: center; margin-top: 5px;
+      }
+      img {
+        height: 40px; margin: auto;
+      }
     }
     // box column different than white
     ion-col.colouredBox {

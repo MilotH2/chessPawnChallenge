@@ -14,9 +14,18 @@
         *ngFor="let chessBoardColumn of chessBoardRow; index as indexColumn"
         [ngClass]="
         {
-          'colouredBox': addBoxColor(indexRow, indexColumn)
+          'colouredBox': addBoxColor(indexRow, indexColumn),
+          'highlightedBox': showHighlightedBoxColor(indexRow, indexColumn),
+          'freeBox': showFreeBoxAndCheckAvailablePawnStepsList(indexRow, indexColumn),
+          'selectNewBoxColorForCreatingNewPawn': selectNewBoxColorForCreatingNewPawn(chessBoardColumn, indexRow, indexColumn)
         }"
       >
+        <h1
+          *ngIf="selectNewBoxColorForCreatingNewPawn(chessBoardColumn, indexRow, indexColumn)"
+        >
+          ?
+        </h1>
+        <img src="" alt="" />
       </ion-col>
     </ion-row>
   </ion-card>
