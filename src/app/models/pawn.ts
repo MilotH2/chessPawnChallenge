@@ -5,4 +5,5 @@ export interface Pawn {
   firstMove: boolean;
   rowIndex: number;
   colIndex: number;
+  logs: Array<string>;
 }

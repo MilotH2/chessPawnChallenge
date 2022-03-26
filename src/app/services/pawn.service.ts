@@ -23,6 +23,7 @@ export class PawnService {
         firstMove: true, // this checks if the PAWN has made the first move, so this way I can add two available movements for the first time
         image:
           color == 'WHITE' ? 'assets/whitePawn.png' : 'assets/blackPawn.png', // Checks what PAWN image to add
+        logs: Array<string>(),
       };
       resolve(newPawn);
     });

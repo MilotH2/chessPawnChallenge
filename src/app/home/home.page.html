@@ -43,4 +43,46 @@
       </ion-col>
     </ion-row>
   </ion-card>
+
+  <!-- Pawn report, Turn and New Pawn Card -->
+  <ion-grid>
+    <ion-row>
+      <!-- PAWN REPORT -->
+      <ion-col size-xs="6">
+        <ion-card class="pawnRepordCard">
+          <ion-item class="selectedPawnItem" lines="full">
+            <ion-icon slot="start" name="list-outline"></ion-icon>
+            <ion-label>Pawn Report</ion-label>
+          </ion-item>
+          <div class="pawnReportList ion-padding ion-text-center">
+            <div *ngIf="!selectedPawn">
+              <h1>Select pawn to see logs!</h1>
+            </div>
+            <div *ngIf="selectedPawn && selectedPawn.logs.length == 0;">
+              No logs!
+            </div>
+            <div *ngIf="selectedPawn && selectedPawn.logs.length > 0">
+              <ion-item lines="full" class="outputItem">
+                <ion-label>Output: output</ion-label>
+              </ion-item>
+              <ion-list>
+                <ion-item
+                  lines="full"
+                  *ngFor="let log of selectedPawn.logs; index as logIndex"
+                >
+                  <ion-label>
+                    <strong>{{ logIndex + 1 }}. &nbsp;</strong>{{ log }}
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </div>
+            <!-- to add blank space at the bottom and see other list of logs -->
+            <div style="height: 100px"></div>
+          </div>
+        </ion-card>
+      </ion-col>
+      <!-- TRUN PAWN and NEW PAWN -->
+      <ion-col size-xs="6"></ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

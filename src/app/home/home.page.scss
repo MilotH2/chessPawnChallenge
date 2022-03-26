@@ -26,3 +26,33 @@ ion-card.chessBoardCard {
     }
   }
 }
+
+
+ion-card.pawnRepordCard {
+  margin: 10px 0 0 0;
+  ion-item.selectedPawnItem {
+    --padding-start: 0;
+    ion-icon {
+      margin: 5px
+    }
+  }
+  div.pawnReportList {
+    padding: 0;
+    height: 300px;
+    overflow-y: scroll;
+    ion-item.outputItem {
+      border: 1px solid grey;
+      border-radius: 10px;
+      position: absolute;
+      bottom: 0;
+      z-index: 9999;
+    }
+    ion-item {
+      --padding-start: 5px;
+      --inner-padding-end: 0;
+    }
+    ion-label {
+      white-space: pre-wrap;
+    }
+  }
+}
