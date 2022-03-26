@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChessBoard } from '../models/chessBoard';
+import { Pawn } from '../models/pawn';
+import { PawnService } from '../services/pawn.service';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +15,24 @@ export class HomePage implements OnInit {
   // show board after initialization
   showChessBoard: boolean = false;
 
-  constructor() {}
+  // current selexted box or pawn indexes, -1 is default and means nothing is selected
+  rowIndex: number = -1;
+  colIndex: number = -1;
+
+  // this is eather null or fulfilled with the selected pawn data
+  selectedPawn: Pawn | null;
+
+  // when an empty box is selected, this turns true so this way we check the condition to show information for creating a new PAWN
+  isCreatingNewPawn: boolean = false;
+
+  // creating a NEW PAWN MODEL for Facing Direction and Color
+  selectedDirection: number = 0;
+  selectedColor: string = 'WHITE';
+
+  constructor(
+    // service to generate a new pawn model
+    private pawnService: PawnService
+  ) {}
 
   ngOnInit() {
     this.initializeChessBoard();
