@@ -328,14 +328,13 @@ export class HomePage implements OnInit {
     // check if first move isn't made
     if (chessBoardColumn.firstMove) {
       // check if first and second square are available
-      if (
-        !this.chessBoard[rowIndex - 1][colIndex] &&
-        !this.chessBoard[rowIndex - 2][colIndex]
-      ) {
+      if (!this.chessBoard[rowIndex - 1][colIndex]) {
         this.availableStepsOfSelectedPawn.push({
           rowIndex: rowIndex - 1,
           colIndex,
         });
+      }
+      if (!this.chessBoard[rowIndex - 2][colIndex]) {
         this.availableStepsOfSelectedPawn.push({
           rowIndex: rowIndex - 2,
           colIndex,
